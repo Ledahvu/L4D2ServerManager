@@ -35,7 +35,7 @@
 
 ---
 
-## 🇬🇧 English
+## EN English
 
 **L4D2 Ultimate Manager** is the ultimate All-in-One solution for Left 4 Dead 2 Server Admins and players. Forget about manually typing SteamCMD commands, extracting files to the wrong directories, or getting confused by dozens of Workshop ID codes. This tool automates everything!
 
