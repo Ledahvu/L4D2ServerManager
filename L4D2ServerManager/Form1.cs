@@ -81,18 +81,65 @@ namespace L4D2ServerManager
                 cmbL4dToolZ.SelectedIndex = 1;
             }
 
+            // ==========================================
+            // CẬP NHẬT: TÁCH RIÊNG 2 COMBOBOX GAME MODE & MUTATION
+            // ==========================================
             if (cmbGameMode != null)
             {
-                cmbGameMode.Items.Add(new ComboItem { Text = "Chiến dịch (Coop)", Value = "coop" });
-                cmbGameMode.Items.Add(new ComboItem { Text = "Đối kháng (Versus)", Value = "versus" });
-                cmbGameMode.Items.Add(new ComboItem { Text = "Sinh tồn (Survival)", Value = "survival" });
+                cmbGameMode.Items.Clear();
+                cmbGameMode.Items.Add(new ComboItem { Text = "📌 Chiến dịch (Campaign)", Value = "coop" });
+                cmbGameMode.Items.Add(new ComboItem { Text = "📌 Chân thực (Realism)", Value = "realism" });
+                cmbGameMode.Items.Add(new ComboItem { Text = "⚔️ Đối kháng (Versus)", Value = "versus" });
+                cmbGameMode.Items.Add(new ComboItem { Text = "⚔️ Đ.kháng Chân thực", Value = "realismversus" });
+                cmbGameMode.Items.Add(new ComboItem { Text = "🛡️ Sinh tồn (Survival)", Value = "survival" });
+                cmbGameMode.Items.Add(new ComboItem { Text = "🛡️ Sinh tồn Đối kháng", Value = "mutation17" });
+                cmbGameMode.Items.Add(new ComboItem { Text = "⛽ Thu thập (Scavenge)", Value = "scavenge" });
+                cmbGameMode.Items.Add(new ComboItem { Text = "🧬 Đột biến (Mutations) ➡", Value = "mutation_menu" }); // Menu kích hoạt
                 cmbGameMode.SelectedIndex = 0;
+            }
+
+            if (cmbMutation != null)
+            {
+                cmbMutation.Items.Clear();
+                cmbMutation.Items.Add(new ComboItem { Text = "🩸 Bleed Out", Value = "mutation6" });
+                cmbMutation.Items.Add(new ComboItem { Text = "🩸 Bleed Out Versus", Value = "mutation7" });
+                cmbMutation.Items.Add(new ComboItem { Text = "🪚 Chainsaw Massacre", Value = "mutation2" });
+                cmbMutation.Items.Add(new ComboItem { Text = "🏆 Confogl", Value = "confogl" });
+                cmbMutation.Items.Add(new ComboItem { Text = "🏃 Dash", Value = "mutation11" });
+                cmbMutation.Items.Add(new ComboItem { Text = "☠️ Death's Door", Value = "mutation14" });
+                cmbMutation.Items.Add(new ComboItem { Text = "⛽ Follow the Liter", Value = "mutation8" });
+                cmbMutation.Items.Add(new ComboItem { Text = "🍖 Gib Fest", Value = "mutation20" });
+                cmbMutation.Items.Add(new ComboItem { Text = "♾️ Hard Eight", Value = "mutation15" });
+                cmbMutation.Items.Add(new ComboItem { Text = "🛡️ Iron Man", Value = "mutation21" });
+                cmbMutation.Items.Add(new ComboItem { Text = "🧙‍♂️ Last Gnome On Earth", Value = "mutation3" });
+                cmbMutation.Items.Add(new ComboItem { Text = "👤 Last Man On Earth", Value = "mutation4" });
+                cmbMutation.Items.Add(new ComboItem { Text = "🔫 Lone Gunman", Value = "mutation16" });
+                cmbMutation.Items.Add(new ComboItem { Text = "🦍 Taaank!", Value = "mutation19" });
+                cmbMutation.Items.Add(new ComboItem { Text = "⭐ VIP Target", Value = "vip_target" });
+                cmbMutation.SelectedIndex = 0;
             }
 
             if (cmbDifficulty != null)
             {
-                cmbDifficulty.Items.Add(new ComboItem { Text = "Dễ (Easy)", Value = "Easy" }); cmbDifficulty.Items.Add(new ComboItem { Text = "Bình thường (Normal)", Value = "Normal" });
-                cmbDifficulty.Items.Add(new ComboItem { Text = "Khó (Hard)", Value = "Hard" }); cmbDifficulty.SelectedIndex = 1;
+                cmbDifficulty.Items.Clear();
+                cmbDifficulty.Items.Add(new ComboItem { Text = "Dễ (Easy)", Value = "Easy" });
+                cmbDifficulty.Items.Add(new ComboItem { Text = "Bình thường (Normal)", Value = "Normal" });
+                cmbDifficulty.Items.Add(new ComboItem { Text = "Khó (Hard)", Value = "Hard" });
+                cmbDifficulty.Items.Add(new ComboItem { Text = "Chuyên gia (Expert)", Value = "Impossible" });
+                cmbDifficulty.SelectedIndex = 1;
+            }
+        }
+
+        // ==========================================
+        // CẬP NHẬT: SỰ KIỆN ẨN/HIỆN MENU MUTATION
+        // ==========================================
+        private void cmbGameMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbGameMode.SelectedItem is ComboItem item && lblMutation != null && cmbMutation != null)
+            {
+                bool isMutation = item.Value == "mutation_menu";
+                lblMutation.Visible = isMutation;
+                cmbMutation.Visible = isMutation;
             }
         }
 
@@ -111,7 +158,6 @@ namespace L4D2ServerManager
             StyleDataGridView(dgvInstances, panelBg, textCol, actionBtn, themeIndex == 1);
             StyleControlsRecursively(this, panelBg, textCol, Color.FromArgb(46, 204, 113), Color.IndianRed, actionBtn, themeIndex == 1);
 
-            // Xóa rác đồ họa khi đổi theme để vẽ lại ListBox màu mới
             if (lstInstalledMaps != null) lstInstalledMaps.Invalidate();
         }
 
@@ -150,19 +196,15 @@ namespace L4D2ServerManager
             isUpdatingUI = false; LoadManagerMaps(); instanceManager.SyncWithProfiles(profileManager.Profiles);
         }
 
-        // ==========================================
-        // CẬP NHẬT: THUẬT TOÁN ĐỊNH DẠNG TEXT ĐẸP MẮT & XUỐNG DÒNG
-        // ==========================================
         private void LoadManagerMaps()
         {
             if (isUpdatingUI || cmbStartMap == null || lstInstalledMaps == null) return;
             if (!(cmbManagerProfiles.SelectedItem is ServerProfile selectedProfile)) return;
 
-            // Kích hoạt chế độ Vẽ tay cho ListBox để ép xuống dòng
             if (lstInstalledMaps.DrawMode != DrawMode.OwnerDrawVariable)
             {
                 lstInstalledMaps.DrawMode = DrawMode.OwnerDrawVariable;
-                lstInstalledMaps.MeasureItem += (s, e) => { e.ItemHeight = 45; }; // Cao 45px để đủ chứa 2 dòng
+                lstInstalledMaps.MeasureItem += (s, e) => { e.ItemHeight = 45; };
                 lstInstalledMaps.DrawItem += (s, e) =>
                 {
                     if (e.Index < 0) return;
@@ -172,12 +214,10 @@ namespace L4D2ServerManager
                         string[] lines = item.DisplayText.Split('\n');
                         using (var brush = new SolidBrush(e.ForeColor))
                         {
-                            // Vẽ dòng 1 (Tên Map Workshop) - In đậm
                             using (Font boldFont = new Font(e.Font, FontStyle.Bold))
                             {
                                 e.Graphics.DrawString(lines[0], boldFont, brush, e.Bounds.Left + 5, e.Bounds.Top + 5);
                             }
-                            // Vẽ dòng 2 (Chi tiết file, id) - Chữ nhỏ, màu xám phụ
                             if (lines.Length > 1)
                             {
                                 Color subColor = e.BackColor.R < 128 ? Color.LightGray : Color.DimGray;
@@ -194,7 +234,7 @@ namespace L4D2ServerManager
 
             cmbStartMap.Items.Clear();
             lstInstalledMaps.Items.Clear();
-            lstInstalledMaps.DisplayMember = ""; // Tắt chế độ hiển thị mặc định
+            lstInstalledMaps.DisplayMember = "";
 
             string[] officialMaps = new string[] { "c1m1_hotel", "c2m1_highway", "c3m1_plankcountry", "c4m1_milltown_a", "c5m1_waterfront", "c8m1_apartment" };
             foreach (string map in officialMaps) cmbStartMap.Items.Add(new MapComboItem { Text = "⭐ Official - " + map, Value = map });
@@ -203,17 +243,14 @@ namespace L4D2ServerManager
             {
                 foreach (var record in selectedProfile.MapRecords)
                 {
-
                     string wsTitle = string.IsNullOrEmpty(record.DisplayName) ? "Unknown Map" : record.DisplayName;
                     string wsId = (record.WorkshopId != null && record.WorkshopId.StartsWith("MANUAL")) ? "Manual" : record.WorkshopId;
                     string vpkName = string.IsNullOrEmpty(record.VpkFileName) ? "Chưa rõ .vpk" : record.VpkFileName;
                     int bspCount = record.BspNames?.Count ?? 0;
 
-                    // Nhồi Data vào ListBox (Sẽ được hàm DrawItem bên trên ngắt dòng tự động tại ký tự \n)
                     string listText = $"🌍 {wsTitle}\n ↳ 📄 ID: {wsId} | File: {vpkName} ({bspCount} map)";
                     lstInstalledMaps.Items.Add(new ListBoxItemWrapper { Record = record, DisplayText = listText });
 
-                    // Nhồi Data vào ComboBox (Tên map nhỏ + Tên map bự + ID + Tên VPK)
                     if (record.BspNames != null)
                     {
                         foreach (string bsp in record.BspNames)
@@ -302,7 +339,6 @@ namespace L4D2ServerManager
 
         private async void btnVerify_Click(object sender, EventArgs e) { if (!(cmbProfiles.SelectedItem is ServerProfile profile)) return; btnVerify.Enabled = false; pbTab1.Visible = true; pbTab1.Value = 0; try { await wsManager.InstallOrVerifyServerAsync(profile.InstallPath, true, LogToConsole, p => UpdateProgress(p, pbTab1)); LogToConsole("✅ Verify xong."); } catch { } finally { btnVerify.Enabled = true; pbTab1.Visible = false; } }
 
-        // HÀM TẢI MAP MỚI (SẼ GỌI API STEAM BÊN TRONG)
         private async void btnInstallMap_Click(object sender, EventArgs e)
         {
             if (!(cmbProfiles.SelectedItem is ServerProfile profile)) return;
@@ -332,7 +368,6 @@ namespace L4D2ServerManager
         private async void btnImportManualMap_Click(object sender, EventArgs e) { if (!(cmbProfiles.SelectedItem is ServerProfile profile)) return; using (OpenFileDialog ofd = new OpenFileDialog { Filter = "VPK Files (*.vpk)|*.vpk" }) { if (ofd.ShowDialog() == DialogResult.OK) { try { await wsManager.InstallManualVpkAsync(ofd.FileName, profile, profileManager, LogToConsole); LoadManagerMaps(); } catch { } } } }
         private void btnConfigServer_Click(object sender, EventArgs e) { if (!(cmbProfiles.SelectedItem is ServerProfile profile)) return; try { string cfgPath = Path.Combine(profile.InstallPath, @"left4dead2\cfg\server.cfg"); Directory.CreateDirectory(Path.GetDirectoryName(cfgPath)); new ServerConfigurator(cfgPath).GenerateConfig(string.IsNullOrWhiteSpace(txtServerName.Text) ? profile.Name : txtServerName.Text, (int)cmbMaxPlayers.SelectedItem, txtSteamGroup.Text); LogToConsole($"✅ Đã tạo file cfg!"); } catch { } }
 
-        // ĐÃ CẬP NHẬT: Nút Xóa Map hiểu được Class Wrapper mới
         private void btnDeleteMap_Click(object sender, EventArgs e)
         {
             if (!(cmbManagerProfiles.SelectedItem is ServerProfile profile)) return;
@@ -359,6 +394,9 @@ namespace L4D2ServerManager
             }
         }
 
+        // ==========================================
+        // CẬP NHẬT: LOGIC TRUYỀN PARAMETER CHO NÚT START GAME
+        // ==========================================
         private void btnStart_Click(object sender, EventArgs e)
         {
             if (!(cmbManagerProfiles.SelectedItem is ServerProfile profile) || cmbStartMap.SelectedItem == null) return;
@@ -370,8 +408,14 @@ namespace L4D2ServerManager
 
             string selectedMap = ((MapComboItem)cmbStartMap.SelectedItem).Value;
             bool useConsole = chkConsoleMode.Checked;
-            string gameMode = ((ComboItem)cmbGameMode.SelectedItem).Value;
             string difficulty = ((ComboItem)cmbDifficulty.SelectedItem).Value;
+
+            // Xử lý logic gộp chế độ chơi
+            string gameMode = ((ComboItem)cmbGameMode.SelectedItem).Value;
+            if (gameMode == "mutation_menu")
+            {
+                gameMode = ((ComboItem)cmbMutation.SelectedItem).Value;
+            }
 
             try { instanceManager.StartInstance(profile.Name, exePath, profile.Port, selectedMap, (int)cmbMaxPlayers.SelectedItem, useConsole, difficulty, gameMode, LogToConsole); } catch (Exception ex) { LogToConsole($"❌ {ex.Message}"); }
         }
@@ -469,7 +513,6 @@ namespace L4D2ServerManager
     public class ComboItem { public string Text { get; set; } public string Value { get; set; } public override string ToString() => Text; }
     public class MapComboItem { public string Text { get; set; } public string Value { get; set; } public override string ToString() => Text; }
 
-    // Class Wrapper bọc dữ liệu cho phép in ra nhiều dòng thông minh
     public class ListBoxItemWrapper
     {
         public MapRecord Record { get; set; }
