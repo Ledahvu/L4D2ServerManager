@@ -93,7 +93,7 @@
 
 | Install & Extension Manager | Global Server Browser |
 | :---: | :---: |
-| <img src="https://via.placeholder.com/600x400.png?text=Install+Tab+Screenshot" width="100%"> | <img src="https://via.placeholder.com/600x400.png?text=Browser+Tab+Screenshot" width="100%"> |
+| <img src="[https://via.placeholder.com/600x400.png?text=Install+Tab+Screenshot](https://github.com/Ledahvu/L4D2ServerManager/blob/master/images/Screenshot%202026-04-14%20075542.png)" width="100%"> | <img src="https://via.placeholder.com/600x400.png?text=Browser+Tab+Screenshot" width="100%"> |
 
 ## 🤝 Contributing
 Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](#).
