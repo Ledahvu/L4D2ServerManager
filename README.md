@@ -89,11 +89,9 @@
 
 ## 📸 Screenshots
 
-*(Replace the links below with actual image URLs of your application)*
-
 | Install & Extension Manager | Global Server Browser |
 | :---: | :---: |
-| <img src="[https://via.placeholder.com/600x400.png?text=Install+Tab+Screenshot](https://github.com/Ledahvu/L4D2ServerManager/blob/master/images/Screenshot%202026-04-14%20075542.png)" width="100%"> | <img src="https://via.placeholder.com/600x400.png?text=Browser+Tab+Screenshot" width="100%"> |
+| <img width="1356" height="776" alt="Screenshot 2026-04-14 075542" src="https://github.com/user-attachments/assets/11c1b6a4-912a-4465-9295-7aa1a057542e" /> | <img width="1355" height="776" alt="Screenshot 2026-04-14 080011" src="https://github.com/user-attachments/assets/a2a59faa-54be-4d4e-9d8a-4fd6cc4f5fd8" /> |
 
 ## 🤝 Contributing
 Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](#).
