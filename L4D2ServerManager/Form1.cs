@@ -13,7 +13,7 @@ namespace L4D2ServerManager
 {
     public partial class Form1 : Form
     {
-        readonly string steamApiKey = "D22D6DB0616AF52E8DB856EA82C474C5";
+        readonly string steamApiKey = "1A2B3C4D5E6F7G8H9J0K";
 
         private readonly ProfileManager profileManager;
         private readonly WorkshopManager wsManager;
@@ -58,32 +58,23 @@ namespace L4D2ServerManager
                 cmbTheme.Items.Add("💻 Hacker Matrix"); cmbTheme.SelectedIndex = 0;
             }
 
-            if (cmbMetaMod != null)
+            // Thiết lập ComboBox Đa Ngôn Ngữ
+            if (cmbLanguage != null)
             {
-                cmbMetaMod.Items.Add(new ComboItem { Text = "Bỏ qua (Không cài)", Value = "" });
-                cmbMetaMod.Items.Add(new ComboItem { Text = "MetaMod 1.11 (Ổn định)", Value = "1.11" });
-                cmbMetaMod.Items.Add(new ComboItem { Text = "MetaMod 1.12 (Mới nhất)", Value = "1.12" });
-                cmbMetaMod.SelectedIndex = 1;
+                cmbLanguage.Items.Add(new ComboItem { Text = "🇻🇳 Tiếng Việt", Value = "VI" });
+                cmbLanguage.Items.Add(new ComboItem { Text = "🇬🇧 English", Value = "EN" });
+                cmbLanguage.Items.Add(new ComboItem { Text = "🇫🇷 Français", Value = "FR" });
+                cmbLanguage.Items.Add(new ComboItem { Text = "🇨🇳 中文", Value = "ZH" });
+                cmbLanguage.Items.Add(new ComboItem { Text = "🇪🇸 Español", Value = "ES" });
+                cmbLanguage.Items.Add(new ComboItem { Text = "🇷🇺 Русский", Value = "RU" });
+                cmbLanguage.Items.Add(new ComboItem { Text = "🇯🇵 日本語", Value = "JA" });
+                cmbLanguage.SelectedIndex = 0; // Mặc định tiếng Việt
             }
 
-            if (cmbSourceMod != null)
-            {
-                cmbSourceMod.Items.Add(new ComboItem { Text = "Bỏ qua (Không cài)", Value = "" });
-                cmbSourceMod.Items.Add(new ComboItem { Text = "SourceMod 1.11 (Ổn định)", Value = "1.11" });
-                cmbSourceMod.Items.Add(new ComboItem { Text = "SourceMod 1.12 (Mới nhất)", Value = "1.12" });
-                cmbSourceMod.SelectedIndex = 1;
-            }
+            if (cmbMetaMod != null) { cmbMetaMod.Items.Add(new ComboItem { Text = "Bỏ qua (Không cài)", Value = "" }); cmbMetaMod.Items.Add(new ComboItem { Text = "MetaMod 1.11 (Ổn định)", Value = "1.11" }); cmbMetaMod.Items.Add(new ComboItem { Text = "MetaMod 1.12 (Mới nhất)", Value = "1.12" }); cmbMetaMod.SelectedIndex = 1; }
+            if (cmbSourceMod != null) { cmbSourceMod.Items.Add(new ComboItem { Text = "Bỏ qua (Không cài)", Value = "" }); cmbSourceMod.Items.Add(new ComboItem { Text = "SourceMod 1.11 (Ổn định)", Value = "1.11" }); cmbSourceMod.Items.Add(new ComboItem { Text = "SourceMod 1.12 (Mới nhất)", Value = "1.12" }); cmbSourceMod.SelectedIndex = 1; }
+            if (cmbL4dToolZ != null) { cmbL4dToolZ.Items.Add(new ComboItem { Text = "Bỏ qua (Không cài)", Value = "" }); cmbL4dToolZ.Items.Add(new ComboItem { Text = "L4DToolZ v2.4.3 (Nhánh lakwsh)", Value = "https://github.com/lakwsh/l4dtoolz/releases/download/2.4.3/l4dtoolz-18820312043.zip" }); cmbL4dToolZ.SelectedIndex = 1; }
 
-            if (cmbL4dToolZ != null)
-            {
-                cmbL4dToolZ.Items.Add(new ComboItem { Text = "Bỏ qua (Không cài)", Value = "" });
-                cmbL4dToolZ.Items.Add(new ComboItem { Text = "L4DToolZ v2.4.3 (Nhánh lakwsh)", Value = "https://github.com/lakwsh/l4dtoolz/releases/download/2.4.3/l4dtoolz-18820312043.zip" });
-                cmbL4dToolZ.SelectedIndex = 1;
-            }
-
-            // ==========================================
-            // CẬP NHẬT: TÁCH RIÊNG 2 COMBOBOX GAME MODE & MUTATION
-            // ==========================================
             if (cmbGameMode != null)
             {
                 cmbGameMode.Items.Clear();
@@ -94,7 +85,7 @@ namespace L4D2ServerManager
                 cmbGameMode.Items.Add(new ComboItem { Text = "🛡️ Sinh tồn (Survival)", Value = "survival" });
                 cmbGameMode.Items.Add(new ComboItem { Text = "🛡️ Sinh tồn Đối kháng", Value = "mutation17" });
                 cmbGameMode.Items.Add(new ComboItem { Text = "⛽ Thu thập (Scavenge)", Value = "scavenge" });
-                cmbGameMode.Items.Add(new ComboItem { Text = "🧬 Đột biến (Mutations) ➡", Value = "mutation_menu" }); // Menu kích hoạt
+                cmbGameMode.Items.Add(new ComboItem { Text = "🧬 Đột biến (Mutations) ➡", Value = "mutation_menu" });
                 cmbGameMode.SelectedIndex = 0;
             }
 
@@ -131,8 +122,198 @@ namespace L4D2ServerManager
         }
 
         // ==========================================
-        // CẬP NHẬT: SỰ KIỆN ẨN/HIỆN MENU MUTATION
+        // CẬP NHẬT: TỪ ĐIỂN ĐA NGÔN NGỮ (7 NGÔN NGỮ)
         // ==========================================
+        private void cmbLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbLanguage.SelectedItem is ComboItem item)
+            {
+                ApplyLanguage(item.Value);
+            }
+        }
+
+        private void ApplyLanguage(string lang)
+        {
+            switch (lang)
+            {
+                case "EN":
+                    tabInstall.Text = "1. Profile Setup & Install";
+                    tabManager.Text = "2. Server Management & Custom Maps";
+                    tabBrowser.Text = "3. Global Server Browser";
+                    lblBaseDir.Text = "📁 Profile Directory:";
+                    lblProfileName.Text = "📝 New Profile Name:";
+                    btnCreateProfile.Text = "+ Create / Overwrite";
+                    lblSelectProfile.Text = "📌 SELECT PROFILE:";
+                    btnInstallServer.Text = "⏬ Install Server (Base L4D2)";
+                    btnInstallMods.Text = "🧩 Install Extensions";
+                    btnVerify.Text = "🛠 Verify (Fix Errors)";
+                    lblTheme.Text = "🎨 Theme:";
+                    btnInstallMap.Text = "⏬ Auto Download";
+                    btnImportManualMap.Text = "📁 Import VPK Manually";
+                    btnConfigServer.Text = "⚙️ Generate server.cfg automatically";
+                    lblStartMap.Text = "🗺 Select Startup Map:";
+                    lblGameMode.Text = "⚔ Game Mode:";
+                    lblDifficulty.Text = "🔥 Difficulty:";
+                    chkConsoleMode.Text = "💻 Run in Hidden Console (-console)";
+                    btnStart.Text = "▶ Start Server";
+                    btnStop.Text = "⏹ Stop Selected Server";
+                    btnDeleteMap.Text = "🗑 Delete Selected Map";
+                    btnScanBrowser.Text = "🔍 Scan Servers";
+                    btnJoinServer.Text = "🚀 JOIN SERVER";
+                    break;
+                case "FR":
+                    tabInstall.Text = "1. Configuration & Installation";
+                    tabManager.Text = "2. Gestion du Serveur & Cartes";
+                    tabBrowser.Text = "3. Navigateur de Serveurs";
+                    lblBaseDir.Text = "📁 Dossier des Profils:";
+                    lblProfileName.Text = "📝 Nouveau Profil:";
+                    btnCreateProfile.Text = "+ Créer / Écraser";
+                    lblSelectProfile.Text = "📌 CHOISIR LE PROFIL:";
+                    btnInstallServer.Text = "⏬ Installer le Serveur";
+                    btnInstallMods.Text = "🧩 Installer les Extensions";
+                    btnVerify.Text = "🛠 Vérifier les fichiers";
+                    lblTheme.Text = "🎨 Thème:";
+                    btnInstallMap.Text = "⏬ Téléchargement Auto";
+                    btnImportManualMap.Text = "📁 Importer un VPK";
+                    btnConfigServer.Text = "⚙️ Générer server.cfg";
+                    lblStartMap.Text = "🗺 Carte de Démarrage:";
+                    lblGameMode.Text = "⚔ Mode de Jeu:";
+                    lblDifficulty.Text = "🔥 Difficulté:";
+                    chkConsoleMode.Text = "💻 Console Masquée (-console)";
+                    btnStart.Text = "▶ Démarrer le Serveur";
+                    btnStop.Text = "⏹ Arrêter le Serveur";
+                    btnDeleteMap.Text = "🗑 Supprimer la Carte";
+                    btnScanBrowser.Text = "🔍 Scanner Serveurs";
+                    btnJoinServer.Text = "🚀 REJOINDRE LE SERVEUR";
+                    break;
+                case "ZH":
+                    tabInstall.Text = "1. 配置文件与安装";
+                    tabManager.Text = "2. 服务器管理与自定义地图";
+                    tabBrowser.Text = "3. 全球服务器浏览器";
+                    lblBaseDir.Text = "📁 配置文件目录:";
+                    lblProfileName.Text = "📝 新配置文件名:";
+                    btnCreateProfile.Text = "+ 创建 / 覆盖";
+                    lblSelectProfile.Text = "📌 选择配置文件:";
+                    btnInstallServer.Text = "⏬ 安装服务器 (L4D2)";
+                    btnInstallMods.Text = "🧩 安装插件";
+                    btnVerify.Text = "🛠 验证 (修复错误)";
+                    lblTheme.Text = "🎨 主题:";
+                    btnInstallMap.Text = "⏬ 自动下载";
+                    btnImportManualMap.Text = "📁 手动导入 VPK";
+                    btnConfigServer.Text = "⚙️ 自动生成 server.cfg";
+                    lblStartMap.Text = "🗺 选择启动地图:";
+                    lblGameMode.Text = "⚔ 游戏模式:";
+                    lblDifficulty.Text = "🔥 难度:";
+                    chkConsoleMode.Text = "💻 隐藏控制台运行 (-console)";
+                    btnStart.Text = "▶ 启动服务器";
+                    btnStop.Text = "⏹ 停止选中的服务器";
+                    btnDeleteMap.Text = "🗑 删除选中的地图";
+                    btnScanBrowser.Text = "🔍 扫描服务器";
+                    btnJoinServer.Text = "🚀 加入服务器";
+                    break;
+                case "ES":
+                    tabInstall.Text = "1. Configuración e Instalación";
+                    tabManager.Text = "2. Gestión de Servidores y Mapas";
+                    tabBrowser.Text = "3. Navegador de Servidores";
+                    lblBaseDir.Text = "📁 Directorio de Perfiles:";
+                    lblProfileName.Text = "📝 Nombre del Perfil:";
+                    btnCreateProfile.Text = "+ Crear / Sobrescribir";
+                    lblSelectProfile.Text = "📌 SELECCIONAR PERFIL:";
+                    btnInstallServer.Text = "⏬ Instalar Servidor";
+                    btnInstallMods.Text = "🧩 Instalar Extensiones";
+                    btnVerify.Text = "🛠 Verificar Archivos";
+                    lblTheme.Text = "🎨 Tema:";
+                    btnInstallMap.Text = "⏬ Descarga Automática";
+                    btnImportManualMap.Text = "📁 Importar VPK Manual";
+                    btnConfigServer.Text = "⚙️ Generar server.cfg";
+                    lblStartMap.Text = "🗺 Mapa de Inicio:";
+                    lblGameMode.Text = "⚔ Modo de Juego:";
+                    lblDifficulty.Text = "🔥 Dificultad:";
+                    chkConsoleMode.Text = "💻 Consola Oculta (-console)";
+                    btnStart.Text = "▶ Iniciar Servidor";
+                    btnStop.Text = "⏹ Detener Servidor";
+                    btnDeleteMap.Text = "🗑 Borrar Mapa";
+                    btnScanBrowser.Text = "🔍 Buscar Servidores";
+                    btnJoinServer.Text = "🚀 UNIRSE AL SERVIDOR";
+                    break;
+                case "RU":
+                    tabInstall.Text = "1. Настройка и Установка";
+                    tabManager.Text = "2. Управление Сервером и Картами";
+                    tabBrowser.Text = "3. Глобальный Браузер Серверов";
+                    lblBaseDir.Text = "📁 Папка профилей:";
+                    lblProfileName.Text = "📝 Имя профиля:";
+                    btnCreateProfile.Text = "+ Создать / Перезаписать";
+                    lblSelectProfile.Text = "📌 ВЫБРАТЬ ПРОФИЛЬ:";
+                    btnInstallServer.Text = "⏬ Установить Сервер";
+                    btnInstallMods.Text = "🧩 Установить Расширения";
+                    btnVerify.Text = "🛠 Проверить Файлы";
+                    lblTheme.Text = "🎨 Тема:";
+                    btnInstallMap.Text = "⏬ Авто Загрузка";
+                    btnImportManualMap.Text = "📁 Импорт VPK вручную";
+                    btnConfigServer.Text = "⚙️ Создать server.cfg";
+                    lblStartMap.Text = "🗺 Стартовая Карта:";
+                    lblGameMode.Text = "⚔ Режим Игры:";
+                    lblDifficulty.Text = "🔥 Сложность:";
+                    chkConsoleMode.Text = "💻 Скрытая консоль (-console)";
+                    btnStart.Text = "▶ Запустить Сервер";
+                    btnStop.Text = "⏹ Остановить Сервер";
+                    btnDeleteMap.Text = "🗑 Удалить Карту";
+                    btnScanBrowser.Text = "🔍 Поиск Серверов";
+                    btnJoinServer.Text = "🚀 ПРИСОЕДИНИТЬСЯ";
+                    break;
+                case "JA":
+                    tabInstall.Text = "1. プロファイル設定とインストール";
+                    tabManager.Text = "2. サーバー管理とカスタムマップ";
+                    tabBrowser.Text = "3. グローバルサーバーブラウザ";
+                    lblBaseDir.Text = "📁 プロファイル保存先:";
+                    lblProfileName.Text = "📝 新しいプロファイル名:";
+                    btnCreateProfile.Text = "+ 作成 / 上書き";
+                    lblSelectProfile.Text = "📌 プロファイルを選択:";
+                    btnInstallServer.Text = "⏬ サーバーをインストール";
+                    btnInstallMods.Text = "🧩 拡張機能をインストール";
+                    btnVerify.Text = "🛠 ファイルを検証";
+                    lblTheme.Text = "🎨 テーマ:";
+                    btnInstallMap.Text = "⏬ 自動ダウンロード";
+                    btnImportManualMap.Text = "📁 VPKを手動でインポート";
+                    btnConfigServer.Text = "⚙️ server.cfgを自動生成";
+                    lblStartMap.Text = "🗺 スタートマップ:";
+                    lblGameMode.Text = "⚔ ゲームモード:";
+                    lblDifficulty.Text = "🔥 難易度:";
+                    chkConsoleMode.Text = "💻 非表示コンソール (-console)";
+                    btnStart.Text = "▶ サーバーを起動";
+                    btnStop.Text = "⏹ サーバーを停止";
+                    btnDeleteMap.Text = "🗑 マップを削除";
+                    btnScanBrowser.Text = "🔍 サーバーをスキャン";
+                    btnJoinServer.Text = "🚀 サーバーに参加";
+                    break;
+                default: // Vietnamese (VI)
+                    tabInstall.Text = "1. Thiết lập Hồ Sơ & Cài Đặt";
+                    tabManager.Text = "2. Quản lý Máy Chủ & Custom Maps";
+                    tabBrowser.Text = "3. Global Server Browser";
+                    lblBaseDir.Text = "📁 Thư mục lưu Profile:";
+                    lblProfileName.Text = "📝 Tên Profile mới:";
+                    btnCreateProfile.Text = "+ Tạo / Ghi đè";
+                    lblSelectProfile.Text = "📌 CHỌN PROFILE:";
+                    btnInstallServer.Text = "⏬ Cài Đặt Server (L4D2 Gốc)";
+                    btnInstallMods.Text = "🧩 Cài Extension (MM, SM, ToolZ)";
+                    btnVerify.Text = "🛠 Verify (Sửa lỗi)";
+                    lblTheme.Text = "🎨 Giao diện:";
+                    btnInstallMap.Text = "⏬ Tải Tự Động";
+                    btnImportManualMap.Text = "📁 Nhập VPK tay";
+                    btnConfigServer.Text = "⚙️ Tự động tạo file server.cfg";
+                    lblStartMap.Text = "🗺 Chọn Map khởi động:";
+                    lblGameMode.Text = "⚔ Chế độ chơi:";
+                    lblDifficulty.Text = "🔥 Độ khó:";
+                    chkConsoleMode.Text = "💻 Chạy ẩn Console (-console)";
+                    btnStart.Text = "▶ Khởi Động Server";
+                    btnStop.Text = "⏹ Dừng Server Đang Chọn";
+                    btnDeleteMap.Text = "🗑 Xóa Map đang chọn";
+                    btnScanBrowser.Text = "🔍 Quét Server";
+                    btnJoinServer.Text = "🚀 JOIN SERVER";
+                    break;
+            }
+        }
+
         private void cmbGameMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbGameMode.SelectedItem is ComboItem item && lblMutation != null && cmbMutation != null)
@@ -394,9 +575,6 @@ namespace L4D2ServerManager
             }
         }
 
-        // ==========================================
-        // CẬP NHẬT: LOGIC TRUYỀN PARAMETER CHO NÚT START GAME
-        // ==========================================
         private void btnStart_Click(object sender, EventArgs e)
         {
             if (!(cmbManagerProfiles.SelectedItem is ServerProfile profile) || cmbStartMap.SelectedItem == null) return;
@@ -410,7 +588,6 @@ namespace L4D2ServerManager
             bool useConsole = chkConsoleMode.Checked;
             string difficulty = ((ComboItem)cmbDifficulty.SelectedItem).Value;
 
-            // Xử lý logic gộp chế độ chơi
             string gameMode = ((ComboItem)cmbGameMode.SelectedItem).Value;
             if (gameMode == "mutation_menu")
             {
