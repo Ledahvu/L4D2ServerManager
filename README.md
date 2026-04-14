@@ -89,8 +89,6 @@
 
 ## 📸 Screenshots
 
-*(Replace the links below with actual image URLs of your application)*
-
 | Install & Extension Manager | Global Server Browser |
 | :---: | :---: |
 | <img width="1356" height="776" alt="Screenshot 2026-04-14 075542" src="https://github.com/user-attachments/assets/929e9f5b-d7ab-4780-8a61-be29978b5bbd" />
