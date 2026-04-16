@@ -91,8 +91,7 @@
 
 | Install & Extension Manager | Global Server Browser |
 | :---: | :---: |
-| <img width="1356" height="776" alt="Screenshot 2026-04-14 075542" src="https://github.com/user-attachments/assets/929e9f5b-d7ab-4780-8a61-be29978b5bbd" /> | <img width="1355" height="776" alt="Screenshot 2026-04-14 080011" src="https://github.com/user-attachments/assets/691bbdf0-f0b6-4096-974b-baaaf2ecfd29" />
- |
+| <img width="1356" height="776" alt="Screenshot 2026-04-14 075542" src="https://github.com/user-attachments/assets/929e9f5b-d7ab-4780-8a61-be29978b5bbd" /> | <img width="1355" height="776" alt="Screenshot 2026-04-14 080011" src="https://github.com/user-attachments/assets/691bbdf0-f0b6-4096-974b-baaaf2ecfd29" />|
 
 ## 🤝 Contributing
 Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](#).
